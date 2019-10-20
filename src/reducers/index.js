@@ -1,5 +1,9 @@
 import { combineReducers } from "redux";
 
-const appReducer = combineReducers({});
+import products from "./products";
+
+const appReducer = combineReducers({
+  products
+});
 
 export default appReducer;
