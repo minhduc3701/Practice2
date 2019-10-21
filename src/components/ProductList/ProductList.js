@@ -20,9 +20,7 @@ class ProductList extends React.Component {
                 <th>Hoạt Động</th>
               </tr>
             </thead>
-            <tbody>
-              <ProductItem></ProductItem>
-            </tbody>
+            <tbody>{this.props.children}</tbody>
           </table>
         </div>
       </div>

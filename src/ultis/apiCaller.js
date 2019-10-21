@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as Configs from "./../constants/Config";
 
-function callApi(endpoint, method = "GET", body) {
+export default function callApi(endpoint, method = "GET", body) {
   return axios({
     method: method,
     url: `${Configs.API_URL}/${endpoint}`,
@@ -10,5 +10,3 @@ function callApi(endpoint, method = "GET", body) {
     console.log(err);
   });
 }
-
-export default callApi;

@@ -1,6 +1,6 @@
 import React from "react";
 
-import ProductList from "./../../components/ProductList/ProductList";
+import ProductsContainers from "./../../containers/ProductsContainers";
 
 class ProductListPage extends React.Component {
   render() {
@@ -11,7 +11,7 @@ class ProductListPage extends React.Component {
             <button type="button" className="btn btn-info mb-10">
               Thêm Sản Phẩm
             </button>
-            <ProductList></ProductList>
+            <ProductsContainers></ProductsContainers>
           </div>
         </div>
       </div>
