@@ -1,11 +1,49 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+
+import * as Actions from "./../../actions/index";
 
 class ProductActionPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: "",
+      txtName: "",
+      txtPrice: "",
+      cbstatus: false
+    };
+  }
+
+  onChange = e => {
+    let target = e.target;
+    let name = target.name;
+    let value = target.type === "checkbox" ? target.checked : target.value;
+    this.setState({
+      [name]: value
+    });
+  };
+
+  onSave = e => {
+    e.preventDefault();
+    let { id, txtName, txtPrice, cbstatus } = this.state;
+    let { history } = this.props;
+    let product = {
+      id: id,
+      name: txtName,
+      price: txtPrice,
+      status: cbstatus
+    };
+    this.props.onAddProduct(product);
+    history.goBack();
+  };
+
   render() {
+    let { txtName, txtPrice, cbstatus } = this.state;
     return (
       <div className="container">
         <div className=" col-xs-6 col-sm-6 col-md-6 col-lg-6">
-          <form>
+          <form onSubmit={this.onSave}>
             <legend>Thêm Sản Phẩm</legend>
 
             <div className="form-group">
@@ -13,15 +51,21 @@ class ProductActionPage extends React.Component {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Input field"
+                placeholder="Tên Sản Phẩm"
+                name="txtName"
+                value={txtName}
+                onChange={this.onChange}
               />
             </div>
             <div className="form-group">
               <label>Giá Sản Phẩm :</label>
               <input
                 type="text"
+                value={txtPrice}
                 className="form-control"
-                placeholder="Input field"
+                placeholder="Giá Sản Phẩm"
+                name="txtPrice"
+                onChange={this.onChange}
               />
             </div>
             <div className="form-group">
@@ -29,7 +73,12 @@ class ProductActionPage extends React.Component {
 
               <div className="checkbox">
                 <label>
-                  <input type="checkbox" value="" />
+                  <input
+                    type="checkbox"
+                    name="cbstatus"
+                    value={cbstatus}
+                    onChange={this.onChange}
+                  />
                   Còn Hàng
                 </label>
               </div>
@@ -37,9 +86,9 @@ class ProductActionPage extends React.Component {
             <button type="submit" className="btn btn-primary mr-10">
               Lưu Lại
             </button>
-            <button type="button" className="btn btn-danger">
+            <Link to="/product-list" className="btn btn-danger">
               Hủy
-            </button>
+            </Link>
           </form>
         </div>
       </div>
@@ -47,4 +96,15 @@ class ProductActionPage extends React.Component {
   }
 }
 
-export default ProductActionPage;
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    onAddProduct: product => {
+      dispatch(Actions.actAddProductsRequest(product));
+    }
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(ProductActionPage);

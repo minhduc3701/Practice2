@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import ProductsContainers from "./../../containers/ProductsContainers";
 
@@ -8,9 +9,9 @@ class ProductListPage extends React.Component {
       <div className="container">
         <div className="row">
           <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <button type="button" className="btn btn-info mb-10">
+            <Link to="/product/add" className="btn btn-info mb-10">
               Thêm Sản Phẩm
-            </button>
+            </Link>
             <ProductsContainers></ProductsContainers>
           </div>
         </div>

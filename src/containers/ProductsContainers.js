@@ -19,11 +19,16 @@ class ProductsContainers extends React.Component {
             key={index}
             index={index}
             product={product}
+            onDelete={this.onDelete}
           ></ProductItem>
         );
       });
     }
     return result;
+  };
+
+  onDelete = id => {
+    this.props.onDeleteProduct(id);
   };
 
   render() {
@@ -42,6 +47,9 @@ const mapDispatchToProps = (dispatch, props) => {
   return {
     onFetchProducts: () => {
       dispatch(Actions.actFetchProductsRequest());
+    },
+    onDeleteProduct: id => {
+      dispatch(Actions.actDeleteProductsRequest(id));
     }
   };
 };
