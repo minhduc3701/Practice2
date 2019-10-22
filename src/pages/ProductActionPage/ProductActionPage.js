@@ -15,6 +15,26 @@ class ProductActionPage extends React.Component {
     };
   }
 
+  componentDidMount() {
+    let { match } = this.props;
+    if (match) {
+      let id = match.params.id;
+      this.props.onGetProduct(id);
+    }
+  }
+
+  UNSAFE_componentWillReceiveProps(nextprops) {
+    if (nextprops && nextprops.itemEditing) {
+      let { itemEditing } = nextprops;
+      this.setState({
+        id: itemEditing.id,
+        txtName: itemEditing.name,
+        txtPrice: itemEditing.price,
+        cbstatus: itemEditing.status
+      });
+    }
+  }
+
   onChange = e => {
     let target = e.target;
     let name = target.name;
@@ -34,7 +54,11 @@ class ProductActionPage extends React.Component {
       price: txtPrice,
       status: cbstatus
     };
-    this.props.onAddProduct(product);
+    if (id) {
+      this.props.onUpdateProduct(product);
+    } else {
+      this.props.onAddProduct(product);
+    }
     history.goBack();
   };
 
@@ -78,6 +102,7 @@ class ProductActionPage extends React.Component {
                     name="cbstatus"
                     value={cbstatus}
                     onChange={this.onChange}
+                    checked={cbstatus}
                   />
                   Còn Hàng
                 </label>
@@ -96,15 +121,27 @@ class ProductActionPage extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    itemEditing: state.itemEditing
+  };
+};
+
 const mapDispatchToProps = (dispatch, props) => {
   return {
     onAddProduct: product => {
       dispatch(Actions.actAddProductsRequest(product));
+    },
+    onGetProduct: id => {
+      dispatch(Actions.actGetProductsRequest(id));
+    },
+    onUpdateProduct: product => {
+      dispatch(Actions.actUpdateProductsRequest(product));
     }
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(ProductActionPage);

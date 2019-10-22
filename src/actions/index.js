@@ -47,3 +47,33 @@ export const actDeleteProductsRequest = id => {
     });
   };
 };
+//edit product
+export const actUpdateProducts = product => {
+  return {
+    type: Types.UPDATE_PRODUCT,
+    product
+  };
+};
+
+export const actUpdateProductsRequest = product => {
+  return dispatch => {
+    callApi(`products/${product.id}`, "PUT", product).then(res => {
+      dispatch(actUpdateProducts(res.data));
+    });
+  };
+};
+//get product
+export const actGetProducts = product => {
+  return {
+    type: Types.EDIT_PRODUCT,
+    product
+  };
+};
+
+export const actGetProductsRequest = id => {
+  return dispatch => {
+    callApi(`products/${id}`, "GET", null).then(res => {
+      dispatch(actGetProducts(res.data));
+    });
+  };
+};

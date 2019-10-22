@@ -14,7 +14,7 @@ let findIndex = (products, id) => {
 
 const products = (state = initialState, action) => {
   let index = -1;
-  let { id } = action;
+  let { id, product } = action;
   switch (action.type) {
     case Types.FETCH_PRODUCTS:
       state = action.products;
@@ -27,6 +27,11 @@ const products = (state = initialState, action) => {
     case Types.DELETE_PRODUCT:
       index = findIndex(state, id);
       state.splice(index, 1);
+      return [...state];
+
+    case Types.UPDATE_PRODUCT:
+      index = findIndex(state, product.id);
+      state[index] = product;
       return [...state];
 
     default:
